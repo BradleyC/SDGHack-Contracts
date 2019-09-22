@@ -3,8 +3,24 @@ pragma solidity ^0.5.0;
 import '../node_modules/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol';
 
 contract Cirrus is ERC20 {
-    constructor () public {
-        // initialize null sensor
+    constructor (string memory name, string memory symbol, address initialRecipient, uint256 initialTransfer) public {
+        _name = name;
+        _symbol = symbol;
+        _mint(msg.sender, 100000);
+        // initialize account with DROP tokens
+        _transfer(address(this), initialRecipient, initialTransfer);
+    }
+
+    // ERC20 naming details
+    string private _name;
+    string private _symbol;
+
+    function name() public view returns (string memory) {
+        return _name;
+    }
+
+    function symbol() public view returns (string memory) {
+        return _symbol;
     }
 
     // Sensors
@@ -96,32 +112,35 @@ contract Cirrus is ERC20 {
         startUsage[msg.sender] = sensors[sensorIndex].totalUsage;
     }
 
+
+    // TODO: FINISH COMPETITION RANKING
     // TODO: lookup owner of usage (reverse lookup address by savings)
-    function rank() public {
-        if (data.length == 0)
-            return;
-        quickSort(data, 0, data.length - 1);
-    }
+    // function rank() public {
+    //     if (data.length == 0)
+    //         return;
+    //     quickSort(data, 0, data.length - 1);
+    // }
 
-    function quickSort(uint[] storage arr, uint left, uint right) internal {
-        uint i = left;
-        uint j = right;
-        uint pivot = arr[left + (right - left) / 2];
-        while (i <= j) {
-            while (arr[i] < pivot) i++;
-            while (pivot < arr[j]) j--;
-            if (i <= j) {
-                (arr[i], arr[j]) = (arr[j], arr[i]);
-                i++;
-                j--;
-            }
-        }
-        if (left < j)
-            quickSort(arr, left, j);
-        if (i < right)
-            quickSort(arr, i, right);
-    }
+    // function quickSort(uint[] storage arr, uint left, uint right) internal {
+    //     uint i = left;
+    //     uint j = right;
+    //     uint pivot = arr[left + (right - left) / 2];
+    //     while (i <= j) {
+    //         while (arr[i] < pivot) i++;
+    //         while (pivot < arr[j]) j--;
+    //         if (i <= j) {
+    //             (arr[i], arr[j]) = (arr[j], arr[i]);
+    //             i++;
+    //             j--;
+    //         }
+    //     }
+    //     if (left < j)
+    //         quickSort(arr, left, j);
+    //     if (i < right)
+    //         quickSort(arr, i, right);
+    // }
 
+    // TODO: DECLARE WINNERS
     // check status (rankings)
     // close competition & declare winner
 
