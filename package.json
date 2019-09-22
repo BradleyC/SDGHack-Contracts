@@ -1,0 +1,7 @@
+{
+    "name": "cirrus-contracts",
+    "version": "0.1.0",
+    "dependencies": {
+        "openzeppelin-solidity": "^2.3.0"
+    }
+}
